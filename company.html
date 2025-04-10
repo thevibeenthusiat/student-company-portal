@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/company-dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <header class="dashboard-header">
+            <h1>Company Dashboard</h1>
+            <div class="user-info">
+                <span id="company-name"></span>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="programming-languages">
+                <!-- Programming languages will be populated here -->
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/dummy-data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user || user.type !== 'company') {
+                window.location.href = '../index.html';
+                return;
+            }
+
+            // Display company name
+            document.getElementById('company-name').textContent = user.username;
+
+            // Sort languages alphabetically
+            const sortedLanguages = [...programmingLanguages].sort((a, b) => 
+                a.name.localeCompare(b.name)
+            );
+
+            // Create dummy student data
+            const students = [
+                {
+                    id: 1,
+                    name: "John Doe",
+                    profilePic: "https://via.placeholder.com/50",
+                    progress: {
+                        "JavaScript": calculateProgress(0.8),
+                        "Python": calculateProgress(0.6),
+                        "Java": calculateProgress(0.4),
+                        "C++": calculateProgress(0.3),
+                        "SQL": calculateProgress(0.9)
+                    }
+                },
+                {
+                    id: 2,
+                    name: "Jane Smith",
+                    profilePic: "https://via.placeholder.com/50",
+                    progress: {
+                        "JavaScript": calculateProgress(0.9),
+                        "Python": calculateProgress(0.7),
+                        "Java": calculateProgress(0.5),
+                        "C++": calculateProgress(0.6),
+                        "SQL": calculateProgress(0.8)
+                    }
+                },
+                {
+                    id: 3,
+                    name: "Bob Wilson",
+                    profilePic: "https://via.placeholder.com/50",
+                    progress: {
+                        "JavaScript": calculateProgress(0.5),
+                        "Python": calculateProgress(0.8),
+                        "Java": calculateProgress(0.7),
+                        "C++": calculateProgress(0.4),
+                        "SQL": calculateProgress(0.6)
+                    }
+                }
+            ];
+
+            // Render languages and student progress
+            const languagesContainer = document.querySelector('.programming-languages');
+            sortedLanguages.forEach(language => {
+                const languageSection = document.createElement('div');
+                languageSection.className = 'language-section';
+                
+                // Sort students by their progress in this language
+                const sortedStudents = [...students].sort((a, b) => 
+                    b.progress[language.name].score - a.progress[language.name].score
+                );
+
+                languageSection.innerHTML = `
+                    <div class="language-header">
+                        <h2>${language.name}</h2>
+                    </div>
+                    <div class="students-list">
+                        ${sortedStudents.map(student => `
+                            <div class="student-card">
+                                <img src="${student.profilePic}" alt="${student.name}" class="student-profile-pic">
+                                <div class="student-info">
+                                    <h3>${student.name}</h3>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${student.progress[language.name].score}%"></div>
+                                    </div>
+                                    <p class="progress-text">Progress: ${student.progress[language.name].score}%</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                languagesContainer.appendChild(languageSection);
+            });
+        });
+
+        function calculateProgress(completion) {
+            return {
+                score: Math.round(completion * 100),
+                completedTopics: Math.floor(completion * 10)
+            };
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = '../index.html';
+        }
+    </script>
+</body>
+</html>

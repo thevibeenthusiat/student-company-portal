@@ -1,0 +1,266 @@
+STUDENT-COMPANY PORTAL - DESIGN DOCUMENT
+=======================================
+
+1. PROJECT OVERVIEW
+------------------
+The Student-Company Portal is a web application connecting international companies with college students, enabling companies to track students' progress in programming courses.
+
+1.1 Project Goals
+- Create user-friendly interface for both students and companies
+- Provide clear progress tracking for programming courses
+- Enable file submission and management for assignments
+- Maintain clean and scalable codebase
+
+2. TECHNICAL STACK
+-----------------
+2.1 Frontend Technologies
+- HTML5 for structure
+- CSS3 for styling
+- Vanilla JavaScript for functionality
+- LocalStorage for data persistence
+
+2.2 File Structure
+student-company-portal/
+├── index.html (login page)
+├── signup.html
+├── css/
+│   ├── style.css (common styles)
+│   ├── auth.css (authentication styles)
+│   ├── student-dashboard.css
+│   └── company-dashboard.css
+├── js/
+│   ├── auth.js
+│   ├── signup.js
+│   ├── student-dashboard.js
+│   ├── company-dashboard.js
+│   └── dummy-data.js
+└── dashboards/
+    ├── student.html
+    └── company.html
+
+3. DESIGN DECISIONS
+------------------
+3.1 Authentication System
+User Types:
+- Students: Email, password, username, DOB, gender, school name
+- Companies: Email, password, username, company name, contact number
+
+Design Choices:
+- Single signup page with toggle for user type
+- Form validation on both client side
+- Secure password storage (hashed in real implementation)
+- Session management using localStorage
+
+3.2 Student Dashboard Features
+1. Programming Languages Display
+   - Alphabetically sorted languages
+   - Visual progress tracking
+   - Color-coded status indicators
+
+2. Topic Management
+   - Individual topic cards
+   - Status indicators:
+     * Green: Completed
+     * Yellow: Pending
+     * Grey: Not Started
+
+3. Content Organization
+   - Description section
+   - Examples section
+   - Questions section
+   - File submission area
+
+Design Choices:
+- Card-based layout for better organization
+- Modal-based topic interaction
+- Progress bars for visual feedback
+- Responsive grid system for topics
+
+3.3 Company Dashboard Features
+1. Student Progress Tracking
+   - List view of students
+   - Progress bars for each language
+   - Sorting by completion percentage
+
+2. Data Visualization
+   - Profile pictures for students
+   - Percentage-based progress display
+   - Color-coded progress bars
+
+4. VISUAL DESIGN
+---------------
+4.1 Color Scheme
+Primary Colors:
+- Primary Blue: #007bff
+- Success Green: #28a745
+- Warning Yellow: #ffc107
+- Danger Red: #dc3545
+- Grey: #6c757d
+
+Background Colors:
+- Light Background: #f4f6f8
+- White: #ffffff
+- Light Grey: #f8f9fa
+
+4.2 Typography
+Font Hierarchy:
+- Primary Font: Arial, sans-serif
+- Headings: 
+  * h1: 24px
+  * h2: 20px
+  * h3: 18px
+- Body Text: 16px
+- Small Text: 14px
+
+5. COMPONENT DESIGN
+------------------
+5.1 Form Components
+.form-group {
+    margin-bottom: 20px;
+}
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.btn-primary {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+5.2 Card Components
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+5.3 Progress Indicators
+.progress-bar {
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+6. RESPONSIVE DESIGN
+-------------------
+6.1 Breakpoints
+/* Mobile First Approach */
+@media (min-width: 768px) {
+    /* Tablet styles */
+}
+@media (min-width: 1024px) {
+    /* Desktop styles */
+}
+
+6.2 Grid System
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+7. DATA STRUCTURES
+-----------------
+7.1 User Data
+{
+    type: 'student' | 'company',
+    email: string,
+    password: string,
+    username: string,
+    // Student-specific fields
+    dob?: string,
+    gender?: string,
+    school?: string,
+    // Company-specific fields
+    companyName?: string,
+    contact?: string
+}
+
+7.2 Programming Language Data
+{
+    id: number,
+    name: string,
+    topics: [
+        {
+            id: number,
+            title: string,
+            description: string,
+            examples: string[],
+            questions: [
+                {
+                    id: number,
+                    text: string,
+                    status: 'not_started' | 'pending' | 'completed',
+                    submission: null | {
+                        filename: string,
+                        timestamp: string,
+                        size: number
+                    }
+                }
+            ],
+            status: 'not_started' | 'pending' | 'completed'
+        }
+    ]
+}
+
+8. FUTURE ENHANCEMENTS
+---------------------
+8.1 Backend Integration
+- RESTful API implementation
+- Database storage
+- File upload system
+
+8.2 Additional Features
+- Real-time progress updates
+- Chat system between students and companies
+- Advanced analytics for companies
+- Automated assessment system
+
+8.3 Security Improvements
+- JWT authentication
+- Password hashing
+- File upload validation
+- Rate limiting
+
+9. IMPLEMENTATION NOTES
+----------------------
+9.1 Current Limitations
+- Data persistence limited to localStorage
+- File uploads stored temporarily
+- No server-side validation
+- Basic authentication system
+
+9.2 Best Practices
+- Mobile-first responsive design
+- Semantic HTML structure
+- Modular CSS organization
+- Clean JavaScript code structure
+- Proper error handling
+- User feedback for all actions
+
+10. TESTING GUIDELINES
+---------------------
+10.1 User Testing
+- Test signup process for both user types
+- Verify dashboard functionality
+- Check file upload system
+- Test progress tracking
+- Verify responsive design
+
+10.2 Browser Compatibility
+- Test on modern browsers
+- Ensure localStorage support
+- Verify CSS compatibility
+- Check JavaScript functionality
+
+END OF DESIGN DOCUMENT 

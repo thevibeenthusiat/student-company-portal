@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Student-Company Portal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-box">
+            <h1>Create Account</h1>
+            
+            <div class="user-type-selector">
+                <button type="button" class="user-type active" data-type="student">Student</button>
+                <button type="button" class="user-type" data-type="company">Company</button>
+            </div>
+
+            <form id="signup-form" onsubmit="return false;">
+                <!-- Common Fields -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message" id="email-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="error-message" id="password-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <span class="error-message" id="username-error"></span>
+                </div>
+
+                <!-- Student Fields -->
+                <div id="student-fields">
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" required>
+                        <span class="error-message" id="dob-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <span class="error-message" id="gender-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="school">School Name</label>
+                        <input type="text" id="school" name="school" required>
+                        <span class="error-message" id="school-error"></span>
+                    </div>
+                </div>
+
+                <!-- Company Fields -->
+                <div id="company-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="company-name">Company Name</label>
+                        <input type="text" id="company-name" name="company-name" required>
+                        <span class="error-message" id="company-name-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact Number</label>
+                        <input type="tel" id="contact" name="contact" required>
+                        <span class="error-message" id="contact-error"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <span class="error-message" id="general-error"></span>
+                </div>
+
+                <button type="submit" class="btn-primary" onclick="document.getElementById('signup-form').dispatchEvent(new Event('submit'))">Sign Up</button>
+            </form>
+
+            <p class="auth-link">Already have an account? <a href="index.html">Login here</a></p>
+        </div>
+    </div>
+    <script src="js/signup.js"></script>
+</body>
+</html>
